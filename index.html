@@ -26,13 +26,14 @@
     <div class="container">
       <!-- CONTENT BOX FOR CITY SEARCH & CITY HISTORY-->
       <div class="row">
-        <div class="col-md-4">
-          <!-- CITY SEARCH -->
+        <div class="col-md-3 bg-light float-left">
+          <!-- CITY SEARCH AREA-->
           <div class="row">
             <div class="col-md-12">
               <h4>Serach for a City:</h4>
+              <!--USER CITY INPUT & SEARCH BUTTON -->
               <div class="input-group mb-3 w-75">
-                <input type="text" class="form-control" id="user-city-search" type="text" placeholder="Boston"
+                <input type="text" class="form-control" id="city-search" type="text" placeholder="Boston"
                   aria-describedby="button-addon2">
                 <div class="input-group-append">
                   <button class="btn btn-primary" id="button-addon2 city-search-btn" type="button">
@@ -42,16 +43,27 @@
               </div>
             </div>
           </div>
+          <!-- USER CITY SEARCH HISTORY -->
           <div class="row">
             <div class="col-md-12">
-              <form class="w-75">
-                <!-- <input class="form-control mt-1" type="text" placeholder="City History" /> -->
-              </form>
+              <div class="w-75 mb-1" id="city-search-history">
+                <button type="button" class="btn btn-outline-secondary mt-1 w-100 text-left">Boston</button>
+                <button type="button" class="btn btn-outline-secondary mt-1 w-100 text-left">Atlanta</button>
+                <button type="button" class="btn btn-outline-secondary mt-1 w-100 text-left">New York</button>
+                <button type="button" class="btn btn-outline-secondary mt-1 w-100 text-left">Sacramento</button>
+                <button type="button" class="btn btn-outline-secondary mt-1 w-100 text-left">Pittsburgh</button>
+                <button type="button" class="btn btn-outline-secondary mt-1 w-100 text-left">Orlando</button>
+              </div>
             </div>
           </div>
         </div>
+        <div class="col-md-9">
+
+        </div>
       </div>
     </div>
+
+
   </section>
   <!-- JQUERY -->
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"

@@ -25,7 +25,7 @@ body {
   text-align: center;
 }
 
-/* .container {
+.container {
   border: 10px solid black;
 }
 
@@ -33,10 +33,18 @@ body {
   border: 8px solid yellow;
 }
 
-.col-md-4 {
+.col-md-3 {
   border: 6px solid red;
 }
 
 .col-md-12 {
   border: 6px solid blue;
-} */
+}
+
+.col-md-9 {
+  border: 6px solid green;
+}
+
+#city-search-item {
+  cursor: pointer;
+}
