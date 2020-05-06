@@ -33,10 +33,10 @@
               <h5>Serach for a City:</h5>
               <!--USER CITY INPUT & SEARCH BUTTON -->
               <div class="input-group mb-3 w-75">
-                <input type="text" class="form-control" id="city-search" type="text" placeholder="Boston"
+                <input type="text" class="form-control" id="city-search" type="text" placeholder="Boston,MA"
                   aria-describedby="button-addon2">
                 <div class="input-group-append">
-                  <button class="btn btn-primary" id="button-addon2 city-search-btn" type="button">
+                  <button class="btn btn-primary" id="city-search-btn" type="button">
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -62,12 +62,12 @@
           <!-- CURRENT CITY DISPLAY -->
           <div class="row bg-white">
             <div class="col-md-12">
-              <!-- <span style="font-size: 30px">Boston (5/4/20)</span>
-              <img>
-              <p>Temperture:</p>
-              <p>Humitidty:</p>
-              <p>WindSpeed:</p>
-              <p>UV Index: <span style="background-color: red; padding: 2px;">6.75</span></p> -->
+              <span id="current-city" style="font-size: 30px"></span>
+              <img id="current-icon">
+              <p id="current-temp"></p>
+              <p id="current-humidity"></p>
+              <p id="current-windspeed"></p>
+              <p>UV Index: <span style="background-color: red; padding: 2px;">6.75</span></p>
             </div>
           </div>
           <!-- 5-DAY FORECAST DISPLAY -->
@@ -99,6 +99,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+  <!-- MOMENT JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <!-- JQUERY -->
   <script src="https://code.jquery.com/jquery-3.5.0.min.js"
     integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>

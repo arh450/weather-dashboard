@@ -12,20 +12,40 @@
 $(document).ready(function () {
 
 
-    // 1. Get Open Weather API Key
+    // Open Weather API Key
     var owApiKey = "fcb202793a3b50951b0129bcb32cb07d";
-    // 2. Create Query URL for Current Weather
-    var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=springfield&appid=${owApiKey}&units=imperial`;
 
-    // console.log(currentURL);
+    // var citySearch = $("#city-search").val();
 
-    // 3. Make AJAX call for current weather of Boston, MA (example in TEMP F)
+    var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=boston,US&appid=${owApiKey}&units=imperial`;
+
+    var currentDate = moment().format("L");
 
     $.get(currentURL).then(function (response) {
         console.log(currentURL);
         console.log(response);
 
+        // Current city, date, and weather icon
+        var currentCity = response.name;
+        var currentCityEl = $("#current-city").text(`${currentCity} (${currentDate})`);
+        // Current Weather icon
+        var weatherIcon = response.weather[0].icon;
+        var currentIconEl = $("#current-icon").attr("src", `https://openweathermap.org/img/wn/${weatherIcon}.png`);
+        // Current temperature display
+        var currentTemp = Math.floor(response.main.temp);
+        var currentTempEl = $("#current-temp").text(`Temperature: ${currentTemp}F°`);
+        // Current humidity display
+        var currentHumidity = response.main.humidity;
+        var currentHumidityEl = $("#current-humidity").text(`Humidity: ${currentHumidity}F°`);
+        // Current Windspeed display
+        var currentWindspeed = Math.floor(response.wind.speed);
+        var currentWindspeedEl = $("#current-windspeed").text(`WindSpeed: ${currentWindspeed}MPH`);
     });
+
+
+
+
+    // On click of search button to display user input
 
 
 
