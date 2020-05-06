@@ -11,46 +11,96 @@
 
 $(document).ready(function () {
 
-
     // Open Weather API Key
     var owApiKey = "fcb202793a3b50951b0129bcb32cb07d";
 
-    // var citySearch = $("#city-search").val();
-
+    // Current city weather url for API call (formatted in farfahrenheit and limited to us cities)
     var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=boston,US&appid=${owApiKey}&units=imperial`;
 
+    // Current date using moment.js
     var currentDate = moment().format("L");
 
+    // Current city weather API call
     $.get(currentURL).then(function (response) {
         console.log(currentURL);
         console.log(response);
 
         // Create current city and date element
         var currentCity = response.name;
-        var currentCityEl = $("<span>").attr("style", "font-size: 30px;").text(`${currentCity} (${currentDate})`);
+        var currentCityEl = $("<span>", {
+            style: "font-size: 30px;"
+        }).text(`${currentCity} (${currentDate}) `);
+
         // Create current weather icon element 
         var weatherIcon = response.weather[0].icon;
-        var currentIconEl = $("<img>").attr("src", `https://openweathermap.org/img/wn/${weatherIcon}.png`);
+        var srcIcon = `https://openweathermap.org/img/wn/${weatherIcon}.png`;
+        var currentIconEl = $("<img>", {
+            class: "icon bg-primary",
+            src: srcIcon,
+        });
+
         // Create current temperature element
         var currentTemp = Math.floor(response.main.temp);
         var currentTempEl = $("<p>").text(`Temperature: ${currentTemp}F°`);
+
         // Create current humidity element
         var currentHumidity = response.main.humidity;
         var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}F°`);
-        // Create current Windspeed display
+
+        // Create current windspeed display
         var currentWindspeed = Math.floor(response.wind.speed);
         var currentWindspeedEl = $("<p>").text(`WindSpeed: ${currentWindspeed}MPH`);
+
         // Append created weather information elements and append to current-city-display <div>
         $("#current-city-display").append(currentCityEl, currentIconEl, currentTempEl, currentHumidityEl, currentWindspeedEl);
 
+        // Make UV index call using lat & lon information found in current weather object
+        var lon = response.coord.lon;
+        var lat = response.coord.lat;
+        console.log(lon);
+        console.log(lat);
+
+        // UV index url to make API call
+        var uvURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${owApiKey}&lon=${lon}&lat=${lat}`;
+
+        // UV api call to get city uv index using lon & lat and then display on to html with appropiate index scale color
+        $.get(uvURL).then(function (uvresponse) {
+            console.log(uvURL);
+            console.log(uvresponse);
+
+            // Create UV index element
+            var uvIndex = uvresponse.value;
+            var uvIndexOuter = $("<p>").text("UV Index: ");
+            var uvIndexInner = $("<span>").addClass("uv-box").text(uvIndex);
+
+            // Nest span element (index rating) within the paragraph element (UV Index text)
+            uvIndexInner.appendTo(uvIndexOuter);
+
+            // If statements to set and change index rating color (based 0-12 UV index scale)
+            if (uvIndex >= 0 && uvIndex <= 2.99) {
+                uvIndexInner.css("background-color", "green").text(uvIndex);
+            }
+            if (uvIndex >= 3 && uvIndex <= 5.99) {
+                uvIndexInner.css("background-color", "yellow").text(uvIndex);
+            }
+            if (uvIndex >= 6 && uvIndex <= 7.99) {
+                uvIndexInner.css("background-color", "orange").text(uvIndex);
+            }
+            if (uvIndex >= 8 && uvIndex <= 10.99) {
+                uvIndexInner.css("background-color", "red").text(uvIndex);
+            }
+            if (uvIndex >= 11) {
+                uvIndexInner.css("background-color", "violet").text(uvIndex);
+            }
+
+            // Append total UV index to current-city-display
+            $("#current-city-display").append(uvIndexOuter);
+        });
     });
 
 
 
 
-    // On click of search button to display user input
-
-    // 
 
 
 

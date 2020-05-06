@@ -48,3 +48,13 @@ body {
 #city-search-item {
   cursor: pointer;
 } */
+.icon {
+  border-radius: 5px;
+}
+
+.uv-box {
+  padding: 5px;
+  border-radius: 5px;
+  /* background-color: none; */
+  font-weight: bold;
+}
