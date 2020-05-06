@@ -25,21 +25,24 @@ $(document).ready(function () {
         console.log(currentURL);
         console.log(response);
 
-        // Current city, date, and weather icon
+        // Create current city and date element
         var currentCity = response.name;
-        var currentCityEl = $("#current-city").text(`${currentCity} (${currentDate})`);
-        // Current Weather icon
+        var currentCityEl = $("<span>").attr("style", "font-size: 30px;").text(`${currentCity} (${currentDate})`);
+        // Create current weather icon element 
         var weatherIcon = response.weather[0].icon;
-        var currentIconEl = $("#current-icon").attr("src", `https://openweathermap.org/img/wn/${weatherIcon}.png`);
-        // Current temperature display
+        var currentIconEl = $("<img>").attr("src", `https://openweathermap.org/img/wn/${weatherIcon}.png`);
+        // Create current temperature element
         var currentTemp = Math.floor(response.main.temp);
-        var currentTempEl = $("#current-temp").text(`Temperature: ${currentTemp}F°`);
-        // Current humidity display
+        var currentTempEl = $("<p>").text(`Temperature: ${currentTemp}F°`);
+        // Create current humidity element
         var currentHumidity = response.main.humidity;
-        var currentHumidityEl = $("#current-humidity").text(`Humidity: ${currentHumidity}F°`);
-        // Current Windspeed display
+        var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}F°`);
+        // Create current Windspeed display
         var currentWindspeed = Math.floor(response.wind.speed);
-        var currentWindspeedEl = $("#current-windspeed").text(`WindSpeed: ${currentWindspeed}MPH`);
+        var currentWindspeedEl = $("<p>").text(`WindSpeed: ${currentWindspeed}MPH`);
+        // Append created weather information elements and append to current-city-display <div>
+        $("#current-city-display").append(currentCityEl, currentIconEl, currentTempEl, currentHumidityEl, currentWindspeedEl);
+
     });
 
 
@@ -47,7 +50,7 @@ $(document).ready(function () {
 
     // On click of search button to display user input
 
-
+    // 
 
 
 
