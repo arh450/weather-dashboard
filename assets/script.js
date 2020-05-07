@@ -18,7 +18,7 @@ $(document).ready(function () {
     var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=boston,US&appid=${owApiKey}&units=imperial`;
 
     // 5-day city forecast url for API call (formatted in farfahrenheit and limited to US cities)
-    var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=boston,US&appid=${owApiKey}&units=imperial&cnt=6`;
+    var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=boston,US&appid=${owApiKey}&units=imperial`;
     // Current date using moment.js
     var currentDate = moment().format("L");
 
@@ -106,15 +106,26 @@ $(document).ready(function () {
         console.log(forecastResponse);
 
         var forecastResults = forecastResponse.list;
+        console.log(forecastResults);
 
-        for (var i = 0; i < forecastResults.length; i++) {
+        // var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
+        for (var i = 1; i < forecastResults.length; i += 8) {
+            // console.log(forecastResults[i].dt);
+
             var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
-            $("#1").text(formattedDate);
-            $("#2").text(formattedDate);
-            $("#3").text(formattedDate);
-            $("#4").text(formattedDate);
-            $("#5").text(formattedDate);
+
+            console.log(formattedDate);
+            var testDisplay = $("<p>").text(formattedDate);
+            $("#5-day-forecast").append(testDisplay);
         }
+
+
+
+
+
+
+
+
 
 
 
