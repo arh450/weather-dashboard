@@ -14,16 +14,18 @@ $(document).ready(function () {
     // Open Weather API Key
     var owApiKey = "fcb202793a3b50951b0129bcb32cb07d";
 
-    // Current city weather url for API call (formatted in farfahrenheit and limited to us cities)
+    // Current city weather url for API call (formatted in farfahrenheit and limited to US cities)
     var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=boston,US&appid=${owApiKey}&units=imperial`;
 
+    // 5-day city forecast url for API call (formatted in farfahrenheit and limited to US cities)
+    var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=boston,US&appid=${owApiKey}&units=imperial&cnt=6`;
     // Current date using moment.js
     var currentDate = moment().format("L");
 
     // Current city weather API call
     $.get(currentURL).then(function (response) {
-        console.log(currentURL);
-        console.log(response);
+        // console.log(currentURL);
+        // console.log(response);
 
         // Create current city and date element
         var currentCity = response.name;
@@ -45,7 +47,7 @@ $(document).ready(function () {
 
         // Create current humidity element
         var currentHumidity = response.main.humidity;
-        var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}F°`);
+        var currentHumidityEl = $("<p>").text(`Humidity: ${currentHumidity}%`);
 
         // Create current windspeed display
         var currentWindspeed = Math.floor(response.wind.speed);
@@ -57,16 +59,16 @@ $(document).ready(function () {
         // Make UV index call using lat & lon information found in current weather object
         var lon = response.coord.lon;
         var lat = response.coord.lat;
-        console.log(lon);
-        console.log(lat);
+        // console.log(lon);
+        // console.log(lat);
 
         // UV index url to make API call
         var uvURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${owApiKey}&lon=${lon}&lat=${lat}`;
 
         // UV api call to get city uv index using lon & lat and then display on to html with appropiate index scale color
         $.get(uvURL).then(function (uvresponse) {
-            console.log(uvURL);
-            console.log(uvresponse);
+            // console.log(uvURL);
+            // console.log(uvresponse);
 
             // Create UV index element
             var uvIndex = uvresponse.value;
@@ -98,7 +100,29 @@ $(document).ready(function () {
         });
     });
 
+    // Create call to get 5-day forecast for city
+    $.get(forecastURL).then(function (forecastResponse) {
+        console.log(forecastURL);
+        console.log(forecastResponse);
 
+        var forecastResults = forecastResponse.list;
+
+        for (var i = 0; i < forecastResults.length; i++) {
+            var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
+            $("#1").text(formattedDate);
+            $("#2").text(formattedDate);
+            $("#3").text(formattedDate);
+            $("#4").text(formattedDate);
+            $("#5").text(formattedDate);
+        }
+
+
+
+
+
+
+
+    });
 
 
 

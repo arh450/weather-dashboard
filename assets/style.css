@@ -55,6 +55,6 @@ body {
 .uv-box {
   padding: 5px;
   border-radius: 5px;
-  /* background-color: none; */
-  font-weight: bold;
+  color: #ffffff;
+  /* font-weight: bold; */
 }
