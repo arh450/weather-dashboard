@@ -12,12 +12,21 @@ $(document).ready(function () {
         event.preventDefault();
         userCityInput = $("#city-input").val();
 
+        // Empty array that is used to push user's city input then send it up to localstorage
         var cityStorageArray = [];
         cityStorageArray.push(userCityInput);
         localStorage.setItem("City", JSON.stringify(cityStorageArray));
 
+        // Function call to get weather data based on the user's input
         citySearch(userCityInput);
     });
+
+    function searchHistory() {
+        var recentSearch = JSON.parse(localStorage.getItem("cityName"));
+        var recentSearchButton = $("<button>").addClass("btn btn-outline-secondary mt-1 w-100 text-left").text(recentSearch);
+
+        $("#city-search-history").prepend(recentSearchButton);
+    }
 
     // City search function that passes through user's city input as a parameter. this way user search is being passed through API URLs/calls
     function citySearch(cityInput) {
@@ -171,7 +180,9 @@ $(document).ready(function () {
 
             }
         });
+        searchHistory();
     }
+
 
 
 
