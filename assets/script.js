@@ -5,10 +5,17 @@
 
 $(document).ready(function () {
 
+    var userCityInput;
+
     // On click of city search button city name based on user input 
     $("#city-search-btn").on("click", function (event) {
         event.preventDefault();
-        var userCityInput = $("#city-input").val();
+        userCityInput = $("#city-input").val();
+
+        var cityStorageArray = [];
+        cityStorageArray.push(userCityInput);
+        localStorage.setItem("City", JSON.stringify(cityStorageArray));
+
         citySearch(userCityInput);
     });
 
@@ -27,10 +34,6 @@ $(document).ready(function () {
 
             // 5-day city forecast url for API call (formatted in farhrenheit and limited to US cities)
             var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityInput},us&appid=${owApiKey}&units=imperial`;
-
-
-
-
 
             // Empty contents of each display on each search before new city data is called for
             $("#current-city-display").empty();
@@ -116,7 +119,6 @@ $(document).ready(function () {
                     // Append total UV index to current-city-display
                     $("#current-city-display").append(uvIndexOuter);
                 });
-
             });
         }
         // Create call to get 5-day forecast for city
