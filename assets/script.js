@@ -106,7 +106,7 @@ $(document).ready(function () {
         // console.log(forecastResponse);
 
         var forecastResults = forecastResponse.list;
-        console.log(forecastResults);
+        // console.log(forecastResults);
 
         // For loop that takes the "list" array found in the city forecast, begins at the 1 position (0 returns current date)
         // and returns the date by a position increment of 8 (this provides date for the next 5-days from current date only...)
@@ -118,22 +118,33 @@ $(document).ready(function () {
             var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
             // console.log(formattedDate);
 
+            // Variables to get weather icons for each of 5-days
+            var fiveDayIcon = forecastResults[i].weather[0].icon;
+            var fiveDaySrc = `https://openweathermap.org/img/wn/${fiveDayIcon}.png`;
+
+            // Variables to get temp & humidity for each of 5-days
+            var fiveDayTemp = Math.floor(forecastResults[i].main.temp);
+            var fiveDayHum = forecastResults[i].main.humidity;
+
+            // Div (card) for each of the 5-days to be displayed on html
             var cardDisplayDiv = $("<div>", {
                 class: "card bg-primary text-white mb-1 d-inline-block",
                 id: "day-card",
                 style: "width: 10rem;"
             });
 
+            var cardTitle = $("<h5>").addClass("card-title").text(formattedDate);
+            var cardImg = $("<img>").attr("src", fiveDaySrc);
+            var cardTemp = $("<p>").text(`Temperature: ${fiveDayTemp}F°`);
+            var cardHum = $("<p>").text(`Humidity: ${fiveDayHum}%`);
 
 
-
-
-
-
-
-
-            $("#5-day-forecast").append(cardDisplay);
-            $("#day-card").append(cardBody);
+            $("#5-day-forecast").append(cardDisplayDiv);
+            cardDisplayDiv.append(cardTitle);
+            cardDisplayDiv.append(cardImg);
+            cardDisplayDiv.append(cardTemp);
+            cardDisplayDiv.append(cardHum);
+            // $("#day-card").append(cardBody);
 
 
         }
