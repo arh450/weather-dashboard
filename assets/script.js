@@ -15,17 +15,17 @@ $(document).ready(function () {
     var owApiKey = "fcb202793a3b50951b0129bcb32cb07d";
 
     // Current city weather url for API call (formatted in farfahrenheit and limited to US cities)
-    var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=boston,US&appid=${owApiKey}&units=imperial`;
+    var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=orlando,us&appid=${owApiKey}&units=imperial`;
 
-    // 5-day city forecast url for API call (formatted in farfahrenheit and limited to US cities)
-    var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=boston,US&appid=${owApiKey}&units=imperial`;
+    // 5-day city forecast url for API call (formatted in farhrenheit and limited to US cities)
+    var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=orlando,us&appid=${owApiKey}&units=imperial`;
     // Current date using moment.js
     var currentDate = moment().format("L");
 
     // Current city weather API call
     $.get(currentURL).then(function (response) {
         console.log(currentURL);
-        console.log(response);
+        // console.log(response);
 
         // Create current city and date element
         var currentCity = response.name;
@@ -106,19 +106,21 @@ $(document).ready(function () {
         // console.log(forecastResponse);
 
         var forecastResults = forecastResponse.list;
-        // console.log(forecastResults);
+        console.log(forecastResults);
 
-        // For loop that takes the "list" array found in the city forecast, begins at the 1 position (0 returns current date)
-        // and returns the date by a position increment of 8 (this provides date for the next 5-days from current date only...)
-        // (...and not the data for every 3-hours of each of the five days)
-        for (var i = 1; i < forecastResults.length; i += 8) {
+        // For loop that takes the "list" array found in the forecastResponse, and begins at the 4 position (3pm of the day after the current date)
+        // and then returns the date by a position increment of 8 (this provides both the date for the next 5-days and the same consistent time of 3PM...)
+        for (var i = 4; i < forecastResults.length; i += 8) {
             // console.log(forecastResults[i].dt);
 
             // Variable that uses moment to reformat the Unix date from the api call
             var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
             // console.log(formattedDate);
 
-            // Variables to get weather icons for each of 5-days
+            // var testTime = moment.unix(1589133600).utc().format("LLL");
+            // console.log(`Test Time: ${testTime}`);
+
+            // Variables to get weather icons for each of the 5-days at 3PM
             var fiveDayIcon = forecastResults[i].weather[0].icon;
             var fiveDaySrc = `https://openweathermap.org/img/wn/${fiveDayIcon}.png`;
 
@@ -130,22 +132,21 @@ $(document).ready(function () {
             var cardDisplayDiv = $("<div>", {
                 class: "card bg-primary text-white mb-1 d-inline-block",
                 id: "day-card",
-                style: "width: 10rem;"
+                style: "width: 8rem;"
             });
 
+            // Variables for created elements that are used to display 5-day forecast data
             var cardTitle = $("<h5>").addClass("card-title").text(formattedDate);
-            var cardImg = $("<img>").attr("src", fiveDaySrc);
-            var cardTemp = $("<p>").text(`Temperature: ${fiveDayTemp}F°`);
+            var cardImg = $("<img>").addClass("center-text").attr("src", fiveDaySrc);
+            var cardTemp = $("<p>").text(`Temp: ${fiveDayTemp}F°`);
             var cardHum = $("<p>").text(`Humidity: ${fiveDayHum}%`);
 
-
-            $("#5-day-forecast").append(cardDisplayDiv);
+            // Append 5-day forecast card data to parent div
+            $("#five-day-forecast").append(cardDisplayDiv);
             cardDisplayDiv.append(cardTitle);
             cardDisplayDiv.append(cardImg);
             cardDisplayDiv.append(cardTemp);
             cardDisplayDiv.append(cardHum);
-            // $("#day-card").append(cardBody);
-
 
         }
 

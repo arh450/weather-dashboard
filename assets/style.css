@@ -58,3 +58,8 @@ body {
   color: #ffffff;
   /* font-weight: bold; */
 }
+
+#day-card {
+  padding: 5px;
+  margin-right: 10px;
+}
