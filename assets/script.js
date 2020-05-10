@@ -24,8 +24,8 @@ $(document).ready(function () {
 
     // Current city weather API call
     $.get(currentURL).then(function (response) {
-        // console.log(currentURL);
-        // console.log(response);
+        console.log(currentURL);
+        console.log(response);
 
         // Create current city and date element
         var currentCity = response.name;
@@ -102,21 +102,40 @@ $(document).ready(function () {
 
     // Create call to get 5-day forecast for city
     $.get(forecastURL).then(function (forecastResponse) {
-        console.log(forecastURL);
-        console.log(forecastResponse);
+        // console.log(forecastURL);
+        // console.log(forecastResponse);
 
         var forecastResults = forecastResponse.list;
         console.log(forecastResults);
 
-        // var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
+        // For loop that takes the "list" array found in the city forecast, begins at the 1 position (0 returns current date)
+        // and returns the date by a position increment of 8 (this provides date for the next 5-days from current date only...)
+        // (...and not the data for every 3-hours of each of the five days)
         for (var i = 1; i < forecastResults.length; i += 8) {
             // console.log(forecastResults[i].dt);
 
+            // Variable that uses moment to reformat the Unix date from the api call
             var formattedDate = moment.unix(forecastResults[i].dt).utc().format("L");
+            // console.log(formattedDate);
 
-            console.log(formattedDate);
-            var testDisplay = $("<p>").text(formattedDate);
-            $("#5-day-forecast").append(testDisplay);
+            var cardDisplayDiv = $("<div>", {
+                class: "card bg-primary text-white mb-1 d-inline-block",
+                id: "day-card",
+                style: "width: 10rem;"
+            });
+
+
+
+
+
+
+
+
+
+            $("#5-day-forecast").append(cardDisplay);
+            $("#day-card").append(cardBody);
+
+
         }
 
 
