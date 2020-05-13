@@ -17,6 +17,10 @@
   text-align: center;
 }
 
+section {
+  margin: 25px 25px 0 25px;
+}
+
 .icon {
   border-radius: 5px;
 }
@@ -31,4 +35,10 @@
 #day-card {
   padding: 5px;
   margin-right: 10px;
+}
+
+#error-text {
+  font-size: 20px;
+  color: red;
+  
 }
