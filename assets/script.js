@@ -131,7 +131,7 @@ $(document).ready(function () {
                 });
             }).catch(function (error) {
                 $("#error-modal").modal('show');
-                $("#error-text").text(`We could not return a result for ${userCityInput}, please check your spelling or try a different city`);
+                $("#error-text").text(`We could not return a result for ${userCityInput}, please check your spelling or try a different city.`);
             });
         }
         // Create call to get 5-day forecast for city
