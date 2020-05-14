@@ -5,32 +5,45 @@
 
 $(document).ready(function () {
 
-    var userCityInput;
+    var cityStorageArray = [];
+
+
 
     // On click of city search button city name based on user input 
     $("#city-search-btn").on("click", function (event) {
         event.preventDefault();
-        userCityInput = $("#city-input").val();
+        var userCityInput = $("#city-input").val();
 
-        // Empty array that is used to push user's city input then send it up to localstorage
-        var cityStorageArray = [];
-        cityStorageArray.push(userCityInput);
-        localStorage.setItem("City", JSON.stringify(cityStorageArray));
+        var cityText = $(this).children().val();
+        cityStorageArray.push(cityText);
 
-        // Function call to get weather data based on the user's input
+        var newCity = JSON.stringify(cityStorageArray);
+        localStorage.setItem("cityStorageArray", newCity);
+
         citySearch(userCityInput);
+
+
     });
 
-    function searchHistory() {
-        var recentSearch = JSON.parse(localStorage.getItem("cityName"));
-        var recentSearchButton = $("<button>").addClass("btn btn-outline-secondary mt-1 w-100 text-left").text(recentSearch);
 
-        $("#city-search-history").prepend(recentSearchButton);
+    function getCityButtons() {
+        $("#city-search-history").empty();
+        var lastCity = JSON.parse(localStorage.getItem("cityStorageArray"));
+
+        for (var i = 0; i < lastCity.length; i++) {
+
+
+            var recentSearchButton = $("<button>").addClass("btn btn-outline-secondary mt-1 w-100 text-left").attr("id", "recent-city").text(lastCity[i]);
+            $("#city-search-history").prepend(recentSearchButton);
+
+        }
     }
+
 
     // City search function that passes through user's city input as a parameter. this way user search is being passed through API URLs/calls
     function citySearch(cityInput) {
         if (cityInput == "") {
+            localStorage.clear();
             $("#error-modal").modal('show');
             $("#error-text").text("Please enter a U.S. city");
         } else {
@@ -127,11 +140,15 @@ $(document).ready(function () {
 
                     // Append total UV index to current-city-display
                     $("#current-city-display").append(uvIndexOuter);
-                    searchHistory();
+
+
                 });
             }).catch(function (error) {
+
                 $("#error-modal").modal('show');
                 $("#error-text").text(`We could not return a result for ${userCityInput}, please check your spelling or try a different city.`);
+                localStorage.clear();
+
             });
         }
         // Create call to get 5-day forecast for city
@@ -183,11 +200,19 @@ $(document).ready(function () {
                 cardDisplayDiv.append(cardHum);
 
             }
-        });
 
+        });
+        getCityButtons()
+        // $("#city-input").val("");
     }
 
 
 
+    $("#city-search-history").on("click", ".btn", function (event) {
+        event.preventDefault();
+        citySearch($(this).text());
+    })
+
 
 });
+
