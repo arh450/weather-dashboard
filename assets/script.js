@@ -1,44 +1,44 @@
-
-// User city input then stored to empty variable
-// Must store and grab user input to/from localstorage
-
-
 $(document).ready(function () {
 
     var cityStorageArray = [];
 
+    // Function to retrieve each item (city) in the cityStorage array and display them to the page as a button
+    function getCityButtons() {
+        $("#city-search-history").empty();
 
+        var searchHistory = JSON.parse(localStorage.getItem("cityStorageArray"));
+        if (cityStorageArray !== null) {
+            for (var i = 0; i < searchHistory.length; i++) {
+                var recentSearchButton = $("<button>").addClass("btn btn-outline-secondary mt-1 w-100 text-left").attr("id", "recent-city").text(searchHistory[i].toUpperCase());
+                $("#city-search-history").prepend(recentSearchButton);
+            }
+        }
+    }
+
+    // Function to retrieve each item (city) in the cityStorage array run the city through the city search function
+    function getLastCity() {
+        var parLastCity = JSON.parse(localStorage.getItem("cityStorageArray"));
+
+        var lastCity = parLastCity[parLastCity.length - 1];
+
+        $("#current-city-display").empty();
+        citySearch(lastCity);
+    }
+
+    // Clear search history button
+    $("#clear-btn").on("click", function (event) {
+        localStorage.clear();
+        location.reload();
+    })
 
     // On click of city search button city name based on user input 
     $("#city-search-btn").on("click", function (event) {
         event.preventDefault();
         var userCityInput = $("#city-input").val();
 
-        var cityText = $(this).children().val();
-        cityStorageArray.push(cityText);
-
-        var newCity = JSON.stringify(cityStorageArray);
-        localStorage.setItem("cityStorageArray", newCity);
-
         citySearch(userCityInput);
-
-
+        getCityButtons();
     });
-
-
-    function getCityButtons() {
-        $("#city-search-history").empty();
-        var lastCity = JSON.parse(localStorage.getItem("cityStorageArray"));
-
-        for (var i = 0; i < lastCity.length; i++) {
-
-
-            var recentSearchButton = $("<button>").addClass("btn btn-outline-secondary mt-1 w-100 text-left").attr("id", "recent-city").text(lastCity[i]);
-            $("#city-search-history").prepend(recentSearchButton);
-
-        }
-    }
-
 
     // City search function that passes through user's city input as a parameter. this way user search is being passed through API URLs/calls
     function citySearch(cityInput) {
@@ -47,6 +47,11 @@ $(document).ready(function () {
             $("#error-modal").modal('show');
             $("#error-text").text("Please enter a U.S. city");
         } else {
+
+            // Set empty cityStorage array with userCityInput and set to localstorage
+            cityStorageArray.push(cityInput);
+            var newCity = JSON.stringify(cityStorageArray);
+            localStorage.setItem("cityStorageArray", newCity);
 
             // Open Weather API Key
             var owApiKey = "fcb202793a3b50951b0129bcb32cb07d";
@@ -143,12 +148,6 @@ $(document).ready(function () {
 
 
                 });
-            }).catch(function (error) {
-
-                $("#error-modal").modal('show');
-                $("#error-text").text(`We could not return a result for ${userCityInput}, please check your spelling or try a different city.`);
-                localStorage.clear();
-
             });
         }
         // Create call to get 5-day forecast for city
@@ -202,17 +201,17 @@ $(document).ready(function () {
             }
 
         });
-        getCityButtons()
-        // $("#city-input").val("");
+        $("#city-input").val("");
+
     }
-
-
 
     $("#city-search-history").on("click", ".btn", function (event) {
         event.preventDefault();
         citySearch($(this).text());
     })
 
+    getCityButtons();
+    getLastCity();
 
 });
 
