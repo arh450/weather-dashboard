@@ -66,10 +66,10 @@ $(document).ready(function () {
             var owApiKey = "fcb202793a3b50951b0129bcb32cb07d";
 
             // Current city weather url for API call (formatted in farfahrenheit and limited to US cities)
-            var currentURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityInput},us&appid=${owApiKey}&units=imperial`;
+            var currentURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput},us&appid=${owApiKey}&units=imperial`;
 
             // 5-day city forecast url for API call (formatted in farhrenheit and limited to US cities)
-            var forecastURL = `http://api.openweathermap.org/data/2.5/forecast?q=${cityInput},us&appid=${owApiKey}&units=imperial`;
+            var forecastURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInput},us&appid=${owApiKey}&units=imperial`;
 
             // Empty contents of each display on each search before new city data is called for
             $("#current-city-display").empty();
@@ -120,7 +120,7 @@ $(document).ready(function () {
                 // console.log(lat);
 
                 // UV index url to make API call
-                var uvURL = `http://api.openweathermap.org/data/2.5/uvi?appid=${owApiKey}&lon=${lon}&lat=${lat}`;
+                var uvURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${owApiKey}&lon=${lon}&lat=${lat}`;
 
                 // UV api call to get city uv index using lon & lat and then display on to html with appropiate index scale color
                 $.get(uvURL).then(function (uvresponse) {
