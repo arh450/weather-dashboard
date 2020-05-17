@@ -7,22 +7,30 @@ $(document).ready(function () {
         $("#city-search-history").empty();
 
         var searchHistory = JSON.parse(localStorage.getItem("cityStorageArray"));
-        if (cityStorageArray !== null) {
+        if (!searchHistory) {
+            searchHistory = [];
+        } else {
             for (var i = 0; i < searchHistory.length; i++) {
                 var recentSearchButton = $("<button>").addClass("btn btn-outline-secondary mt-1 w-100 text-left").attr("id", "recent-city").text(searchHistory[i].toUpperCase());
                 $("#city-search-history").prepend(recentSearchButton);
             }
+
         }
     }
+
 
     // Function to retrieve each item (city) in the cityStorage array run the city through the city search function
     function getLastCity() {
         var parLastCity = JSON.parse(localStorage.getItem("cityStorageArray"));
 
-        var lastCity = parLastCity[parLastCity.length - 1];
+        if (!parLastCity) {
+            parLastCity = [];
+        } else {
+            var lastCity = parLastCity[parLastCity.length - 1];
 
-        $("#current-city-display").empty();
-        citySearch(lastCity);
+            $("#current-city-display").empty();
+            citySearch(lastCity);
+        }
     }
 
     // Clear search history button
@@ -49,6 +57,7 @@ $(document).ready(function () {
         } else {
 
             // Set empty cityStorage array with userCityInput and set to localstorage
+
             cityStorageArray.push(cityInput);
             var newCity = JSON.stringify(cityStorageArray);
             localStorage.setItem("cityStorageArray", newCity);
