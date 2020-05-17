@@ -27,7 +27,6 @@ $(document).ready(function () {
             parLastCity = [];
         } else {
             var lastCity = parLastCity[parLastCity.length - 1];
-
             $("#current-city-display").empty();
             citySearch(lastCity);
         }
@@ -57,7 +56,6 @@ $(document).ready(function () {
         } else {
 
             // Set empty cityStorage array with userCityInput and set to localstorage
-
             cityStorageArray.push(cityInput);
             var newCity = JSON.stringify(cityStorageArray);
             localStorage.setItem("cityStorageArray", newCity);
@@ -81,8 +79,8 @@ $(document).ready(function () {
             // Current city weather API call
             $.get(currentURL).then(function (response) {
 
-                console.log(currentURL);
-                console.log(response);
+                // console.log(currentURL);
+                // console.log(response);
 
                 // Create current city and date element
                 var currentCity = response.name;
@@ -154,8 +152,6 @@ $(document).ready(function () {
 
                     // Append total UV index to current-city-display
                     $("#current-city-display").append(uvIndexOuter);
-
-
                 });
             });
         }
@@ -208,12 +204,11 @@ $(document).ready(function () {
                 cardDisplayDiv.append(cardHum);
 
             }
-
         });
         $("#city-input").val("");
-
     }
 
+    // On click of a city in search history that will show current/5day weather again for that city
     $("#city-search-history").on("click", ".btn", function (event) {
         event.preventDefault();
         citySearch($(this).text());
@@ -221,6 +216,5 @@ $(document).ready(function () {
 
     getCityButtons();
     getLastCity();
-
 });
 
