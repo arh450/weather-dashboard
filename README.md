@@ -42,11 +42,9 @@ Using localstorage, a user can also refresh their browser window and not lose th
 
 ## Preview
 
-![Screenshot of WD](images\screenshot_3.PNG)
-
-![Screenshot of WD](images\screenshot_1.PNG)
-
-![Screenshot of WD](images\screenshot_2.PNG)
+![Screenshot of wd](images/screenshot_1.PNG)
+![Screenshot of wd](images/screenshot_2.PNG)
+![Screenshot of wd](images/screenshot_3.PNG)
 
 ## Contributers/Authors
 
